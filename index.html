@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app>
+<head>
+    <meta charset="utf-8" />
+    <title>Angular TODO Sample</title>
+</head>
+<body>
+    <div ng-controller="MeuController">
+        <h1>{{ title }} - {{ remaining() }} restante(s)</h1>
+        <input type="text" placeholder="Filtrar" ng-model="search" />
+        <ul ng-repeat="todo in todos | filter: search">
+            <li>
+                <input type="checkbox" ng-model="todo.done">
+                {{ todo.text }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <script>
+        function MeuController($scope) {
+            $scope.title = "Minha Lista de Tarefas";
+
+            $scope.todos = [
+                { text: 'Aprender Angular', done: true },
+                { text: 'Construir uma aplicação com Angular', done: false }
+            ];
+
+            $scope.remaining = function () {
+                var count = 0;
+                angular.forEach($scope.todos, function (todo) {
+                    count += todo.done ? 0 : 1;
+                });
+                return count;
+            };
+        }
+    </script>
+</body>
+</html>
